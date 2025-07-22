@@ -2,5 +2,5 @@ namespace TestTask.Core.Interfaces;
 
 public interface ICenterRepository
 {
-    public Task<CenterPoint> GetCenterPointAsync(string path);
+    public Task<CenterPoint> GetCenterPointAsync();
 }

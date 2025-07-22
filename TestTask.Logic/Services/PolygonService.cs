@@ -12,7 +12,7 @@ public class PolygonService
         _polygonRepository = polygonRepository;
     }
 
-    public async Task<Polygon> GetAsync()
+    public async Task<CustomPolygon> GetAsync()
     {
         return await _polygonRepository.GetPolygonAsync();
     }

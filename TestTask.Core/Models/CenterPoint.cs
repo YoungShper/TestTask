@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TestTask.Core;
 
-public class CenterPoint
+public class CenterPoint : PointPolygonBase
 {
-    public Point Center { get; set; }
+    public required Coordinates Center { get; set; }
 }

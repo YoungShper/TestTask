@@ -5,7 +5,7 @@ namespace TestTask.DataAccess.Repositories;
 
 public class CenterRepository : ICenterRepository
 {
-    public Task<CenterPoint> GetCenterPointAsync(string path)
+    public Task<CenterPoint> GetCenterPointAsync()
     {
         throw new NotImplementedException();
     }
