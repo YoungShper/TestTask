@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using TestTask.Core;
 using TestTask.Core.Interfaces;
 using TestTask.DataAccess;
@@ -15,20 +16,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Configuration.AddJsonFile("appsettings.json");
         builder.Services.AddTransient<IDataReader<CenterPoint>, CenterPointReader>();
         builder.Services.AddTransient<IDataReader<CustomPolygon>, FieldReader>();
         builder.Services.AddTransient<ICenterRepository, CenterRepository>();
         builder.Services.AddTransient<IFieldRepository, FieldRepository>();
-        builder.Services.AddTransient<IFullDataService, FullDataService>(provider =>
-        {
-            var fieldRepo = provider.GetRequiredService<IFieldRepository>();
-            var centerRepo = provider.GetRequiredService<ICenterRepository>();
-
-            var fieldsPath = "../TestTask.DataAccess/Data/fields.kml";  
-            var centersPath = "../TestTask.DataAccess/Data/centroids.kml";
-
-            return new FullDataService(centerRepo, fieldRepo, fieldsPath, centersPath);
-        });
+        builder.Services.Configure<FullDataServiceOptions>(builder.Configuration.GetSection(IFullDataServiceOptions.FullDataService));
+        builder.Services.AddSingleton<IFullDataServiceOptions>(x => x.GetRequiredService<IOptions<FullDataServiceOptions>>().Value);
+        builder.Services.AddTransient<IFullDataService, FullDataService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

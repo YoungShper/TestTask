@@ -9,15 +9,16 @@ public class FullDataService : IFullDataService
 {
     private ICenterRepository _centerRepository;
     private IFieldRepository _fieldRepository;
+    private IFullDataServiceOptions _options;
     private string _fieldsFilePath;
     private string _centersFilePath;
 
-    public FullDataService(ICenterRepository centerRepository, IFieldRepository fieldRepository, string fieldsFilePath, string centersFilePath)
+    public FullDataService(ICenterRepository centerRepository, IFieldRepository fieldRepository, IFullDataServiceOptions options)
     {
         _centerRepository = centerRepository;
         _fieldRepository = fieldRepository;
-        _fieldsFilePath = fieldsFilePath;
-        _centersFilePath = centersFilePath;
+        _fieldsFilePath = options.FieldsPath;
+        _centersFilePath = options.CentroidsPath;
     }
 
     public async Task<List<FullFieldDTO>> GetAllFullFieldsDataAsync()
