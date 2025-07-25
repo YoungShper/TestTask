@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using Serilog;
 using TestTask.Core;
 using TestTask.Core.Interfaces;
 using TestTask.DataAccess;
@@ -6,6 +7,7 @@ using TestTask.DataAccess.Interfaces;
 using TestTask.DataAccess.Repositories;
 using TestTask.Logic.Interfaces;
 using TestTask.Logic.Services;
+using TestTask.WebApi.Middlewares;
 
 namespace TestTask.WebApi;
 
@@ -13,7 +15,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Log.Logger = new LoggerConfiguration().MinimumLevel.Information()
+            .WriteTo.File("logs.txt").CreateLogger();
+        Log.Information("Starting up");
+        
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddSerilog();
 
         // Add services to the container.
         builder.Configuration.AddJsonFile("appsettings.json");
@@ -38,9 +45,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
 
 

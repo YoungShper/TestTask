@@ -26,13 +26,13 @@ public class FullDataController : Controller
         return Ok(data);
     }
     [HttpGet("api/field/{id}/distance")]
-    public async Task<IActionResult> GetDistance(int id, [FromQuery]double latitude, [FromQuery]double longitude)
+    public async Task<IActionResult> GetDistance(int id, [FromQuery]double longitude, [FromQuery]double latitude)
     {
         var data = await _fullDataService.GetDistanceToCenterAsync(id, latitude, longitude);
         return Ok(data);
     }
     [HttpGet("api/fields/containing")]
-    public async Task<IActionResult> GetContainingField([FromQuery]double latitude, [FromQuery]double longitude)
+    public async Task<IActionResult> GetContainingField([FromQuery]double longitude, [FromQuery]double latitude)
     {
         var data = await _fullDataService.GetFieldByPointDataAsync(latitude, longitude);
         return Ok(data);
