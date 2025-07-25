@@ -12,7 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\TestTask.DataAccess\TestTask.DataAccess.csproj" />
+      <ProjectReference Include="..\TestTask.Logic\TestTask.Logic.csproj" />
     </ItemGroup>
 
 </Project>

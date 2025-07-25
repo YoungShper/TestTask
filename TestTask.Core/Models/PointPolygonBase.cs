@@ -4,4 +4,5 @@ public abstract class PointPolygonBase
 {
     public required int ID { get; set; }
     public required float Size { get; set; }
+    public required string Name { get; set; }
 }
