@@ -19,4 +19,8 @@
       <ProjectReference Include="..\TestTask.Logic\TestTask.Logic.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="HttpDtos\" />
+    </ItemGroup>
+
 </Project>

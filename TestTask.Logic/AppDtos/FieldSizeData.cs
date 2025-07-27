@@ -1,6 +1,6 @@
 namespace TestTask.Logic.DTO;
 
-public class FieldSizeDTO
+public class FieldSizeData
 {
     public required double Size { get; set; }
 }

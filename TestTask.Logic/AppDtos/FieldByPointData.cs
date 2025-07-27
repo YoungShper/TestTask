@@ -1,6 +1,6 @@
 namespace TestTask.Logic.DTO;
 
-public class FieldByPointDTO
+public class FieldByPointData
 {
     public int? ID { get; set; }
     public string? Name { get; set; }

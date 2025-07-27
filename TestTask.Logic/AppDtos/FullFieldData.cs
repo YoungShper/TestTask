@@ -1,9 +1,9 @@
 namespace TestTask.Logic.DTO;
 
-public class FullFieldDTO 
+public class FullFieldData 
 {
     public required int ID { get; set; }
     public required string Name { get; set; }
     public required float Size { get; set; }
-    public required FullLocationDTO Locations { get; set; }
+    public required FullLocationData Locations { get; set; }
 }

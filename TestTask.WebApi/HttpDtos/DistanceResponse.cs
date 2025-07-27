@@ -1,6 +1,7 @@
 namespace TestTask.Logic.DTO;
 
-public class DistanceDTO
+public class DistanceResponse
 {
     public required double Distance { get; set; }
+    
 }

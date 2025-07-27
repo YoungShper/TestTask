@@ -21,19 +21,19 @@ public class FullDataService : IFullDataService
         _centersFilePath = options.CentroidsPath;
     }
 
-    public async Task<List<FullFieldDTO>> GetAllFullFieldsDataAsync()
+    public async Task<List<FullFieldData>> GetAllFullFieldsDataAsync()
     {
         var fields = await _fieldRepository.GetAllFieldsAsync(_fieldsFilePath);
         var centers = await _centerRepository.GetAllCentersAsync(_centersFilePath);
 
         var data = (from field in fields
             join center in centers on field.ID equals center.ID
-            select new FullFieldDTO
+            select new FullFieldData
             {
                 ID = field.ID,
                 Name = field.Name,
                 Size = field.Size,
-                Locations = new FullLocationDTO
+                Locations = new FullLocationData
                 {
                     Center = center.Center,
                     Polygon = field.Polygon
@@ -42,26 +42,26 @@ public class FullDataService : IFullDataService
         return data;
     }
 
-    public async Task<FieldSizeDTO> GetFieldSizeDataAsync(int fieldID)
+    public async Task<FieldSizeData> GetFieldSizeDataAsync(int fieldID)
     {
         var field = await _fieldRepository.GetFieldByIDAsync(_fieldsFilePath, fieldID);
 
-        return new FieldSizeDTO()
+        return new FieldSizeData()
         {
             Size = GeometryHelper.GetArea(field.Polygon)
         };
     }
 
-    public async Task<DistanceDTO> GetDistanceToCenterAsync(int id, double latitude, double longitude)
+    public async Task<DistanceData> GetDistanceToCenterAsync(int id, double latitude, double longitude)
     {
         var center = await _centerRepository.GetCenterPointByIDAsync(_centersFilePath, id);
-        return new DistanceDTO
+        return new DistanceData
         {
             Distance = GeometryHelper.GetDistanceFromCenter(center.Center, latitude, longitude)
         };
     }
 
-    public async Task<FieldByPointDTO> GetFieldByPointDataAsync(double latitude, double longitude)
+    public async Task<FieldByPointData> GetFieldByPointDataAsync(double latitude, double longitude)
     {
         var fields = await _fieldRepository.GetAllFieldsAsync(_fieldsFilePath);
         
@@ -70,10 +70,10 @@ public class FullDataService : IFullDataService
                 GeometryHelper.IsPointInsidePolygon(x.Polygon, latitude, longitude));
         if (result == null)
         {
-            return new FieldByPointDTO();
+            return new FieldByPointData();
         }
 
-        return new FieldByPointDTO()
+        return new FieldByPointData()
         {
             ID = result.ID,
             Name = result.Name,
